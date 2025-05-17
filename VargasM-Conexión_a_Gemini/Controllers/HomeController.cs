@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using VargasM_Conexión_a_Gemini.Interfaces;
 using VargasM_Conexión_a_Gemini.Models;
 using VargasM_Conexión_a_Gemini.Repositories;
 
@@ -10,15 +11,17 @@ namespace VargasM_Conexión_a_Gemini.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IChatBotService _chatBotService;
+
+        public HomeController(ILogger<HomeController> logger, IChatBotService chatBotService)
         {
             _logger = logger;
+            _chatBotService = chatBotService;
         }
 
         public async Task<IActionResult> Index()
         {
-            GeminiRepository repo = new GeminiRepository();
-            string answer = await repo.GetChatbotResponse("¿Cuáles son los beneficios de la inteligencia artificial?");
+            string answer = await _chatBotService.GetChatbotResponse("Haz un resumen de la pelicula titanic");
 
             return View(answer);
         }

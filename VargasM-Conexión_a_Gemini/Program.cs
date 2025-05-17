@@ -1,3 +1,6 @@
+using VargasM_Conexión_a_Gemini.Interfaces;
+using VargasM_Conexión_a_Gemini.Repositories;
+
 namespace VargasM_Conexión_a_Gemini
 {
     public class Program
@@ -8,6 +11,8 @@ namespace VargasM_Conexión_a_Gemini
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddSingleton<IChatBotService, GroqRepository>();
 
             var app = builder.Build();
 
